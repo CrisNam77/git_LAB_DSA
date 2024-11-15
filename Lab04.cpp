@@ -265,14 +265,14 @@ bool isAVL(NODE *pRoot)
 
 int main()
 {
-    NODE *pRoot = nullptr;
-    Insert(pRoot, 30);
-    Insert(pRoot, 7);
-    Insert(pRoot, 5);
-    Insert(pRoot, 15);
-    Insert(pRoot, 25);
-    Insert(pRoot, 3);
-    Insert(pRoot, 17);
+    // NODE *pRoot = nullptr;
+    // Insert(pRoot, 30);
+    // Insert(pRoot, 7);
+    // Insert(pRoot, 5);
+    // Insert(pRoot, 15);
+    // Insert(pRoot, 25);
+    // Insert(pRoot, 3);
+    // Insert(pRoot, 17);
     
     return 0;
 }
