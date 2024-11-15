@@ -382,8 +382,8 @@ bool isFullBST(NODE *pRoot)
 
 int main()
 {
-    // int a[8] = {15, 7, 20, 6, 10, 8, 11, 16};
-    // NODE *pRoot = createTree(a, 8);
-    // LevelOrder(pRoot);
+    int a[8] = {15, 7, 20, 6, 10, 8, 11, 16};
+    NODE *pRoot = createTree(a, 8);
+    LevelOrder(pRoot);
     return 0;
 }
