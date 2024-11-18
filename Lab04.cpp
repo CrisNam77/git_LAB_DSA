@@ -253,22 +253,48 @@ int floor(NODE *pRoot, int x)
     {
         return floor(pRoot->p_left, x);
     }
-    int t = floor(pRoot->p_right, x);
-    return (t <= x) ? t : pRoot->key;
+    int reuslt = floor(pRoot->p_right, x);
+    if (reuslt == -1)
+    {
+        return pRoot->key;
+    }
+    return reuslt;
 }
 
+void createBackbone(NODE *&pRoot){
+    if (pRoot == nullptr)
+    {
+        return;
+    }
+    while (pRoot->p_left != nullptr){
+        pRoot = rightRotate(pRoot);
+    }
+    createBackbone(pRoot->p_right);
+}
 
+void createCompleteTree(NODE *&pRoot){
+    createBackbone(pRoot);
+    int n = 0;
+
+    
+}
 
 int main()
 {
-    // NODE *pRoot = nullptr;
-    // Insert(pRoot, 30);
-    // Insert(pRoot, 7);
-    // Insert(pRoot, 5);
-    // Insert(pRoot, 15);
-    // Insert(pRoot, 25);
-    // Insert(pRoot, 3);
-    // Insert(pRoot, 17);
+    NODE *pRoot = nullptr;
+    Insert(pRoot, 30);
+    Insert(pRoot, 7);
+    Insert(pRoot, 5);
+    Insert(pRoot, 15);
+    Insert(pRoot, 25);
+    Insert(pRoot, 3);
+    Insert(pRoot, 17);
     
+    createBackbone(pRoot);
+    while (pRoot != nullptr){
+        cout << pRoot->key << " ";
+        pRoot = pRoot->p_right;
+    }
+
     return 0;
 }
