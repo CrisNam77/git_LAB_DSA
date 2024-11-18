@@ -238,29 +238,7 @@ bool isAVL(NODE *pRoot)
     return true;
 }
 
-// void printNode(int key, int h)
-// {
-//     for (int i = 0; i < h; i++)
-//     {
-//         cout << " ";
-//     }
-//     cout << key;
-// }
-// void printTree(NODE *pRoot, int h)
-// {
-//     if (pRoot == nullptr)
-//     {
-//         for (int i = 0; i < h; i++)
-//         {
-//             cout << " ";
-//         }
-//         cout << "* " << endl;
-//         return;
-//     }
-//     printTree(pRoot->p_left, h + 1);
-//     printNode(pRoot->key, h);
-//     printTree(pRoot->p_right, h + 1);
-// }
+
 int floor(NODE *pRoot, int x)
 {
     if (pRoot == nullptr)
