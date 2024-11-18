@@ -261,6 +261,24 @@ bool isAVL(NODE *pRoot)
 //     printNode(pRoot->key, h);
 //     printTree(pRoot->p_right, h + 1);
 // }
+int floor(NODE *pRoot, int x)
+{
+    if (pRoot == nullptr)
+    {
+        return -1;
+    }
+    if (pRoot->key == x)
+    {
+        return pRoot->key;
+    }
+    if (pRoot->key > x)
+    {
+        return floor(pRoot->p_left, x);
+    }
+    int t = floor(pRoot->p_right, x);
+    return (t <= x) ? t : pRoot->key;
+}
+
 
 
 int main()
