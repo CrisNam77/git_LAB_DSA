@@ -209,7 +209,7 @@ void LevelOrder(NODE *pRoot)
     {
         NODE *current = q.front();
         q.pop();
-        cout << current->key << " " << current->height << endl;
+        cout << current->key << " "; //<< current->height << endl;
         if (current->p_left != nullptr)
         {
             q.push(current->p_left);
@@ -238,8 +238,7 @@ bool isAVL(NODE *pRoot)
     return true;
 }
 
-
-int floor(NODE *pRoot, int x)
+int Floor(NODE *pRoot, int x)
 {
     if (pRoot == nullptr)
     {
@@ -251,9 +250,9 @@ int floor(NODE *pRoot, int x)
     }
     if (pRoot->key > x)
     {
-        return floor(pRoot->p_left, x);
+        return Floor(pRoot->p_left, x);
     }
-    int reuslt = floor(pRoot->p_right, x);
+    int reuslt = Floor(pRoot->p_right, x);
     if (reuslt == -1)
     {
         return pRoot->key;
@@ -261,40 +260,98 @@ int floor(NODE *pRoot, int x)
     return reuslt;
 }
 
-void createBackbone(NODE *&pRoot){
+void createBackbone(NODE *&pRoot)
+{
     if (pRoot == nullptr)
     {
         return;
     }
-    while (pRoot->p_left != nullptr){
+    while (pRoot->p_left != nullptr)
+    {
         pRoot = rightRotate(pRoot);
     }
     createBackbone(pRoot->p_right);
 }
 
-void createCompleteTree(NODE *&pRoot){
-    createBackbone(pRoot);
-    int n = 0;
-
-    
+int countBackbone(NODE *pRoot)
+{
+    int count = 0;
+    NODE *current = pRoot;
+    while (current != nullptr)
+    {
+        count++;
+        current = current->p_right;
+    }
+    return count;
 }
+void createCompleteTree(NODE *&pRoot)
+{
+    createBackbone(pRoot);
+    int n = countBackbone(pRoot);
+    int h = log2(n + 1);
+    int m = pow(2, h) - 1;
+
+    // make n - m left rotations starting form the top of backbone
+    NODE *tmp = pRoot;
+    NODE *parrent = nullptr;
+    for (int i = 0; i < n - m; i++)
+    {
+        if (tmp && tmp->p_right)
+        {
+            if (!parrent)
+            {
+                pRoot = leftRotate(tmp);
+                parrent = pRoot;
+            }
+            else
+            {
+                parrent->p_right = leftRotate(tmp);
+                parrent = parrent->p_right;
+            }
+            tmp = parrent->p_right;
+        }
+    }
+
+    while (m > 1)
+    {
+        m = m / 2;
+        tmp = pRoot;
+        parrent = nullptr;
+        for (int i = 0; i < m; i++)
+        {
+            if (tmp && tmp->p_right)
+            {
+                if (!parrent)
+                {
+                    pRoot = leftRotate(tmp);
+                    parrent = pRoot;
+                }
+                else
+                {
+                    parrent->p_right = leftRotate(tmp);
+                    parrent = parrent->p_right;
+                }
+                tmp = parrent->p_right;
+            }
+        }
+    }
+}
+
+
 
 int main()
 {
     NODE *pRoot = nullptr;
-    Insert(pRoot, 30);
-    Insert(pRoot, 7);
-    Insert(pRoot, 5);
-    Insert(pRoot, 15);
-    Insert(pRoot, 25);
+    Insert(pRoot, 1);
+    Insert(pRoot, 2);
     Insert(pRoot, 3);
-    Insert(pRoot, 17);
-    
-    createBackbone(pRoot);
-    while (pRoot != nullptr){
-        cout << pRoot->key << " ";
-        pRoot = pRoot->p_right;
-    }
+    Insert(pRoot, 4);
+    Insert(pRoot, 5);
+    Insert(pRoot, 6);
+    LevelOrder(pRoot);
+    cout << endl;
+    createCompleteTree(pRoot);
+    LevelOrder(pRoot);
 
     return 0;
 }
